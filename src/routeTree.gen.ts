@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as WriteRouteImport } from './routes/write'
+import { Route as ApiAnalyzeRouteImport } from './routes/api/analyze'
 import { Route as ApiAssistRouteImport } from './routes/api/assist'
 import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as ApiTranscribeRouteImport } from './routes/api/transcribe'
@@ -29,6 +30,11 @@ const SearchRoute = SearchRouteImport.update({
 const WriteRoute = WriteRouteImport.update({
   id: '/write',
   path: '/write',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAnalyzeRoute = ApiAnalyzeRouteImport.update({
+  id: '/api/analyze',
+  path: '/api/analyze',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAssistRoute = ApiAssistRouteImport.update({
@@ -51,6 +57,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/write': typeof WriteRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
   '/api/assist': typeof ApiAssistRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/write': typeof WriteRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
   '/api/assist': typeof ApiAssistRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -68,6 +76,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/search': typeof SearchRoute
   '/write': typeof WriteRoute
+  '/api/analyze': typeof ApiAnalyzeRoute
   '/api/assist': typeof ApiAssistRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/api/transcribe': typeof ApiTranscribeRoute
@@ -78,6 +87,7 @@ export interface FileRouteTypes {
     | '/'
     | '/search'
     | '/write'
+    | '/api/analyze'
     | '/api/assist'
     | '/api/generate-image'
     | '/api/transcribe'
@@ -86,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/search'
     | '/write'
+    | '/api/analyze'
     | '/api/assist'
     | '/api/generate-image'
     | '/api/transcribe'
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/search'
     | '/write'
+    | '/api/analyze'
     | '/api/assist'
     | '/api/generate-image'
     | '/api/transcribe'
@@ -103,6 +115,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   SearchRoute: typeof SearchRoute
   WriteRoute: typeof WriteRoute
+  ApiAnalyzeRoute: typeof ApiAnalyzeRoute
   ApiAssistRoute: typeof ApiAssistRoute
   ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   ApiTranscribeRoute: typeof ApiTranscribeRoute
@@ -129,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/write'
       fullPath: '/write'
       preLoaderRoute: typeof WriteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/analyze': {
+      id: '/api/analyze'
+      path: '/api/analyze'
+      fullPath: '/api/analyze'
+      preLoaderRoute: typeof ApiAnalyzeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/assist': {
@@ -159,6 +179,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   SearchRoute: SearchRoute,
   WriteRoute: WriteRoute,
+  ApiAnalyzeRoute: ApiAnalyzeRoute,
   ApiAssistRoute: ApiAssistRoute,
   ApiGenerateImageRoute: ApiGenerateImageRoute,
   ApiTranscribeRoute: ApiTranscribeRoute,
