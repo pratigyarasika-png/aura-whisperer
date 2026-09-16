@@ -214,14 +214,13 @@ async function searchPubMed(i: z.infer<typeof inputSchema>): Promise<Paper[]> {
 /** DOAJ API v2 — open-access journal articles only. */
 async function searchDoaj(i: z.infer<typeof inputSchema>): Promise<Paper[]> {
   const bare = i.query.replace(/^https?:\/\/doi\.org\//i, "");
-  const term =
-    i.mode === "doi"
-      ? `doi:"${bare}"`
-      : `${i.query} AND year:[${i.yearFrom} TO ${i.yearTo}]`;
+  // DOAJ returns nothing when a year range is embedded in the query string,
+  // so the query stays plain and the year window is applied client-side below.
+  const term = i.mode === "doi" ? `doi:"${bare}"` : i.query;
   const data = await getJson(
-    `https://doaj.org/api/v2/search/articles/${encodeURIComponent(term)}?pageSize=25`,
+    `https://doaj.org/api/v2/search/articles/${encodeURIComponent(term)}?pageSize=50`,
   );
-  return (data.results ?? []).map((item: any): Paper => {
+  const papers = (data.results ?? []).map((item: any): Paper => {
     const bib = item.bibjson ?? {};
     const doi = (bib.identifier ?? []).find((id: any) => id.type === "doi")?.value ?? null;
     const fulltext = (bib.link ?? []).find((l: any) => l.type === "fulltext")?.url ?? null;
