@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { FileDropPanel } from "@/components/FileDropPanel";
+import { VoiceInput } from "@/components/VoiceInput";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
@@ -279,6 +281,7 @@ function SearchDiscovery() {
               {search.isPending ? <Loader2 className="animate-spin" /> : <Search />}
               <span className="hidden sm:inline">Search</span>
             </Button>
+            </div>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
