@@ -273,6 +273,8 @@ function SearchDiscovery() {
                 className="min-w-0 flex-1 bg-transparent py-1.5 text-sm outline-none placeholder:text-muted-foreground"
               />
             </div>
+            <div className="flex items-center gap-2">
+            <VoiceInput label="Dictate search query" onText={(text) => setQuery((value) => (value ? `${value} ${text}` : text))} />
             <Button type="submit" className="rounded-full px-5" disabled={!query.trim() || search.isPending}>
               {search.isPending ? <Loader2 className="animate-spin" /> : <Search />}
               <span className="hidden sm:inline">Search</span>
