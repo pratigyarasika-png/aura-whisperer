@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { VoiceInput } from "@/components/VoiceInput";
 import { Button } from "@/components/ui/button";
 import { streamAssist } from "@/lib/assist-client";
 import { DEFAULT_ACCENT, accentForeground, accentPresets, isHex } from "@/lib/theme";
@@ -624,6 +625,10 @@ function ResearchWorkspace() {
                   <Button asChild type="button" variant="outline" size="icon" className="size-8 rounded-full bg-background sm:size-9">
                     <Link to="/search" search={{ q: query.trim() || undefined }} aria-label="Open search & discovery" title="Search & discovery"><Search /></Link>
                   </Button>
+                  <VoiceInput
+                    label="Dictate your question"
+                    onText={(text) => setQuery((value) => (value ? `${value} ${text}` : text))}
+                  />
                   {answering ? (
                     <Button type="button" variant="outline" className="h-8 rounded-full px-3 sm:h-9 sm:px-4" onClick={() => abortRef.current?.abort()}>
                       <Square className="size-3.5" /><span className="hidden sm:inline">Stop</span>
