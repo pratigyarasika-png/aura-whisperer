@@ -241,6 +241,9 @@ async function searchDoaj(i: z.infer<typeof inputSchema>): Promise<Paper[]> {
       indexedIn: ["doaj"],
     };
   });
+  return papers.filter(
+    (p: Paper) => p.year === null || (p.year >= i.yearFrom && p.year <= i.yearTo),
+  );
 }
 
 export const searchPapers = createServerFn({ method: "GET" })
