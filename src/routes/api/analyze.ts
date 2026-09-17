@@ -33,7 +33,11 @@ async function docxToText(bytes: Uint8Array): Promise<string> {
     if (method === 0) {
       xml = decoder.decode(raw);
     } else {
-      const stream = new Blob([raw]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+      const rawCopy = new Uint8Array(raw.length);
+      rawCopy.set(raw);
+      const stream = new Blob([rawCopy.buffer as ArrayBuffer])
+        .stream()
+        .pipeThrough(new DecompressionStream("deflate-raw"));
       xml = await new Response(stream).text();
     }
     return xml
