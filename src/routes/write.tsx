@@ -22,6 +22,11 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { DiagramStudio } from "@/components/DiagramStudio";
+import { FileDropPanel } from "@/components/FileDropPanel";
+import { ImageStudio } from "@/components/ImageStudio";
+import { PosterStudio } from "@/components/PosterStudio";
+import { VoiceInput } from "@/components/VoiceInput";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -112,6 +117,7 @@ function WritingWorkspace() {
   const [toolbar, setToolbar] = useState<{ top: number; left: number } | null>(null);
   const [aiOpen, setAiOpen] = useState(false);
   const [saveState, setSaveState] = useState<"saved" | "unsaved">("saved");
+  const [studio, setStudio] = useState<"diagram" | "poster" | "image" | "analyze">("diagram");
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
