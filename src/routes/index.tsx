@@ -36,6 +36,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { VoiceInput } from "@/components/VoiceInput";
 import { Button } from "@/components/ui/button";
 import { streamAssist } from "@/lib/assist-client";
 import { DEFAULT_ACCENT, accentForeground, accentPresets, isHex } from "@/lib/theme";
@@ -550,9 +551,9 @@ function ResearchWorkspace() {
                 const inner = (
                   <>
                     <span className="grid size-9 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground"><Icon className="size-4" /></span>
-                    <span className="hidden sm:block">
-                      <span className="block text-xs font-semibold">{action.label}</span>
-                      <span className="block text-[10px] text-muted-foreground">{action.helper}</span>
+                    <span className="block min-w-0">
+                      <span className="block truncate text-[11px] font-semibold sm:text-xs">{action.label}</span>
+                      <span className="block truncate text-[10px] text-muted-foreground">{action.helper}</span>
                     </span>
                   </>
                 );
@@ -624,6 +625,10 @@ function ResearchWorkspace() {
                   <Button asChild type="button" variant="outline" size="icon" className="size-8 rounded-full bg-background sm:size-9">
                     <Link to="/search" search={{ q: query.trim() || undefined }} aria-label="Open search & discovery" title="Search & discovery"><Search /></Link>
                   </Button>
+                  <VoiceInput
+                    label="Dictate your question"
+                    onText={(text) => setQuery((value) => (value ? `${value} ${text}` : text))}
+                  />
                   {answering ? (
                     <Button type="button" variant="outline" className="h-8 rounded-full px-3 sm:h-9 sm:px-4" onClick={() => abortRef.current?.abort()}>
                       <Square className="size-3.5" /><span className="hidden sm:inline">Stop</span>

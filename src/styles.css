@@ -194,12 +194,14 @@
 .hub-action-top:hover, .hub-action-bottom:hover { transform: translateX(-50%) translateY(-2px); }
 .hub-action-right:hover, .hub-action-left:hover { transform: translateY(calc(-50% - 2px)); }
 
-@media (max-width: 639px) {
-  .hub-action { padding-right: 0.5rem; }
+.hub-action { max-width: min(14rem, 46%); }
+.mode-toggle { width: fit-content; max-width: 100%; align-self: center; }
+
+@media (max-width: 767px) {
+  .hub-action { padding-right: 0.625rem; max-width: 44%; gap: 0.5rem; }
   .hub-action-top { top: 0; }
   .hub-action-bottom { bottom: 0; }
-  .hub-core { padding: 6% !important; }
-  .mode-toggle { width: 100%; justify-content: center; }
+  .hub-core { width: 50% !important; padding: 5% !important; }
 }
 
 /* micro-interactions */

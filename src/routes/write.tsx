@@ -22,6 +22,11 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { DiagramStudio } from "@/components/DiagramStudio";
+import { FileDropPanel } from "@/components/FileDropPanel";
+import { ImageStudio } from "@/components/ImageStudio";
+import { PosterStudio } from "@/components/PosterStudio";
+import { VoiceInput } from "@/components/VoiceInput";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -112,6 +117,7 @@ function WritingWorkspace() {
   const [toolbar, setToolbar] = useState<{ top: number; left: number } | null>(null);
   const [aiOpen, setAiOpen] = useState(false);
   const [saveState, setSaveState] = useState<"saved" | "unsaved">("saved");
+  const [studio, setStudio] = useState<"diagram" | "poster" | "image" | "analyze">("diagram");
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -803,6 +809,7 @@ function WritingWorkspace() {
             >
               <Sigma /> Equations
             </Button>
+            <VoiceInput label="Dictate into manuscript" onText={(text) => insert(`${escapeHtml(text)} `)} />
             <span
               aria-live="polite"
               className={cn(
@@ -858,6 +865,49 @@ function WritingWorkspace() {
                 ))}
               </ol>
             )}
+          </div>
+
+          <div className="mt-8 border-t border-border pt-5">
+            <h3 className="font-display text-sm font-semibold">Studio</h3>
+            <p className="mt-1 text-[11px] text-muted-foreground">
+              Diagrams, posters, AI figures, and document analysis — insert results straight into the manuscript.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {([
+                ["diagram", "Diagram & flowchart"],
+                ["poster", "Poster & infographic"],
+                ["image", "AI image"],
+                ["analyze", "Analyze document"],
+              ] as const).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setStudio(id)}
+                  className={cn(
+                    "rounded-full border px-3 py-1.5 text-[11px] font-semibold transition-colors",
+                    studio === id
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border text-muted-foreground hover:bg-muted",
+                  )}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div className="mt-4">
+              {studio === "diagram" && <DiagramStudio onInsert={insert} />}
+              {studio === "poster" && <PosterStudio onInsert={insert} />}
+              {studio === "image" && <ImageStudio onInsert={insert} />}
+              {studio === "analyze" && (
+                <FileDropPanel
+                  onAnalysis={(text, label) =>
+                    insert(
+                      `<h2>Analysis — ${escapeHtml(label)}</h2><p>${escapeHtml(text).replace(/\n{2,}/g, "</p><p>").replace(/\n/g, "<br />")}</p>`,
+                    )
+                  }
+                />
+              )}
+            </div>
           </div>
         </section>
 

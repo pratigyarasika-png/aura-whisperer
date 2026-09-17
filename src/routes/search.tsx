@@ -25,6 +25,8 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { FileDropPanel } from "@/components/FileDropPanel";
+import { VoiceInput } from "@/components/VoiceInput";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
@@ -273,10 +275,13 @@ function SearchDiscovery() {
                 className="min-w-0 flex-1 bg-transparent py-1.5 text-sm outline-none placeholder:text-muted-foreground"
               />
             </div>
+            <div className="flex items-center gap-2">
+            <VoiceInput label="Dictate search query" onText={(text) => setQuery((value) => (value ? `${value} ${text}` : text))} />
             <Button type="submit" className="rounded-full px-5" disabled={!query.trim() || search.isPending}>
               {search.isPending ? <Loader2 className="animate-spin" /> : <Search />}
               <span className="hidden sm:inline">Search</span>
             </Button>
+            </div>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
@@ -399,6 +404,16 @@ function SearchDiscovery() {
             </div>
           </div>
         </form>
+
+        <section aria-label="Analyze a document" className="mt-8 rounded-3xl border border-border bg-card p-4 sm:p-6">
+          <p className="font-display text-sm font-semibold">Analyze a paper</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Drop a PDF, Word file, image, or video — or paste a link — and Orbis will summarize it.
+          </p>
+          <div className="mt-4">
+            <FileDropPanel />
+          </div>
+        </section>
 
         <section className="mt-8 rounded-3xl border border-border bg-card p-4 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
