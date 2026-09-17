@@ -550,9 +550,9 @@ function ResearchWorkspace() {
                 const inner = (
                   <>
                     <span className="grid size-9 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground"><Icon className="size-4" /></span>
-                    <span className="hidden sm:block">
-                      <span className="block text-xs font-semibold">{action.label}</span>
-                      <span className="block text-[10px] text-muted-foreground">{action.helper}</span>
+                    <span className="block min-w-0">
+                      <span className="block truncate text-[11px] font-semibold sm:text-xs">{action.label}</span>
+                      <span className="block truncate text-[10px] text-muted-foreground">{action.helper}</span>
                     </span>
                   </>
                 );
