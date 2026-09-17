@@ -405,6 +405,16 @@ function SearchDiscovery() {
           </div>
         </form>
 
+        <section aria-label="Analyze a document" className="mt-8 rounded-3xl border border-border bg-card p-4 sm:p-6">
+          <p className="font-display text-sm font-semibold">Analyze a paper</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">
+            Drop a PDF, Word file, image, or video — or paste a link — and Orbis will summarize it.
+          </p>
+          <div className="mt-4">
+            <FileDropPanel />
+          </div>
+        </section>
+
         <section className="mt-8 rounded-3xl border border-border bg-card p-4 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
